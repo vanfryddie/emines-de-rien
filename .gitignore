@@ -11,3 +11,10 @@ package-lock.json
 .claude-flow/
 .claude/proven-config.json
 .claude/.proven-config-version
+.claude-flow/
+.claude/proven-config.json
+.claude/.proven-config-version
+render/loop/
+render/loopcheck.js
+render/loop/
+render/loopcheck.js
