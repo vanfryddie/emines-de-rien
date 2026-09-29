@@ -23,11 +23,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # enablement:true turns Pages on and points it at Actions, so there is
-      # no manual Settings step once the repository is public.
+      # Pages must already be switched on with Source = GitHub Actions
+      # (Settings -> Pages). The token cannot enable it for us.
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       # Only site/ is published; the generators in render/ stay out of the build.
       - uses: actions/upload-pages-artifact@v3
