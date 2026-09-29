@@ -1,8 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://vanfryddie.github.io/emines-de-rien/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vanfryddie.github.io/emines-de-rien/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://vanfryddie.github.io/emines-de-rien/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://vanfryddie.github.io/emines-de-rien/de/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://vanfryddie.github.io/emines-de-rien/nl/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://vanfryddie.github.io/emines-de-rien/pl/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vanfryddie.github.io/emines-de-rien/es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://vanfryddie.github.io/emines-de-rien/it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vanfryddie.github.io/emines-de-rien/"/>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://vanfryddie.github.io/emines-de-rien/fr/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vanfryddie.github.io/emines-de-rien/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://vanfryddie.github.io/emines-de-rien/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://vanfryddie.github.io/emines-de-rien/de/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://vanfryddie.github.io/emines-de-rien/nl/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://vanfryddie.github.io/emines-de-rien/pl/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vanfryddie.github.io/emines-de-rien/es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://vanfryddie.github.io/emines-de-rien/it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vanfryddie.github.io/emines-de-rien/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vanfryddie.github.io/emines-de-rien/de/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vanfryddie.github.io/emines-de-rien/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://vanfryddie.github.io/emines-de-rien/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://vanfryddie.github.io/emines-de-rien/de/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://vanfryddie.github.io/emines-de-rien/nl/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://vanfryddie.github.io/emines-de-rien/pl/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vanfryddie.github.io/emines-de-rien/es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://vanfryddie.github.io/emines-de-rien/it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vanfryddie.github.io/emines-de-rien/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vanfryddie.github.io/emines-de-rien/nl/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vanfryddie.github.io/emines-de-rien/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://vanfryddie.github.io/emines-de-rien/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://vanfryddie.github.io/emines-de-rien/de/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://vanfryddie.github.io/emines-de-rien/nl/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://vanfryddie.github.io/emines-de-rien/pl/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vanfryddie.github.io/emines-de-rien/es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://vanfryddie.github.io/emines-de-rien/it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vanfryddie.github.io/emines-de-rien/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vanfryddie.github.io/emines-de-rien/pl/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vanfryddie.github.io/emines-de-rien/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://vanfryddie.github.io/emines-de-rien/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://vanfryddie.github.io/emines-de-rien/de/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://vanfryddie.github.io/emines-de-rien/nl/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://vanfryddie.github.io/emines-de-rien/pl/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vanfryddie.github.io/emines-de-rien/es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://vanfryddie.github.io/emines-de-rien/it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vanfryddie.github.io/emines-de-rien/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vanfryddie.github.io/emines-de-rien/es/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vanfryddie.github.io/emines-de-rien/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://vanfryddie.github.io/emines-de-rien/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://vanfryddie.github.io/emines-de-rien/de/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://vanfryddie.github.io/emines-de-rien/nl/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://vanfryddie.github.io/emines-de-rien/pl/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vanfryddie.github.io/emines-de-rien/es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://vanfryddie.github.io/emines-de-rien/it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vanfryddie.github.io/emines-de-rien/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vanfryddie.github.io/emines-de-rien/it/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vanfryddie.github.io/emines-de-rien/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://vanfryddie.github.io/emines-de-rien/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://vanfryddie.github.io/emines-de-rien/de/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://vanfryddie.github.io/emines-de-rien/nl/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://vanfryddie.github.io/emines-de-rien/pl/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vanfryddie.github.io/emines-de-rien/es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://vanfryddie.github.io/emines-de-rien/it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vanfryddie.github.io/emines-de-rien/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>

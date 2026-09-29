@@ -1,118 +1,89 @@
 'use strict';
 /**
- * Injects the photography into index.html from the image manifest, so the
- * markup stays in one place and the srcsets can never drift from the files
- * on disk. Idempotent: it rewrites between the marker comments each run.
+ * Builds every localised page from the catalogues in i18n/ plus the image
+ * manifest, and writes a sitemap carrying the hreflang alternates.
+ *
+ *   node render/build.js
  */
 const fs = require('fs');
 const path = require('path');
+const { render, SITE } = require('./page');
 
 const ROOT = path.join(__dirname, '..', 'site');
-const M = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets/img/manifest.json'), 'utf8'));
-const by = Object.fromEntries(M.map((m) => [m.name, m]));
+const manifest = JSON.parse(
+  fs.readFileSync(path.join(ROOT, 'assets/img/manifest.json'), 'utf8'));
 
-const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;')
-  .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+// English first: it owns the root URL and is the x-default.
+const CODES = ['en', 'fr', 'de', 'nl', 'pl', 'es', 'it'];
+const all = CODES.map((c) => require(`./i18n/${c}.js`));
 
-/** A <picture> with webp + jpeg, correct intrinsic size, and an LQIP. */
-function pic(name, sizes, opts) {
-  const m = by[name];
-  if (!m) throw new Error('no image ' + name);
-  const o = opts || {};
-  const ws = m.widths;
-  const set = (ext) => ws.map((w) => `./assets/img/${name}-${w}.${ext} ${w}w`).join(', ');
-  const fall = ws[Math.min(1, ws.length - 1)];
-  const eager = o.eager ? ' fetchpriority="high"' : ' loading="lazy"';
-  return `<picture>
-      <source type="image/webp" srcset="${set('webp')}" sizes="${sizes}">
-      <img src="./assets/img/${name}-${fall}.jpg" srcset="${set('jpg')}" sizes="${sizes}"
-           width="${m.w}" height="${m.h}" alt="${esc(o.alt || m.alt)}"
-           style="background-image:url(${m.lqip})"${eager} decoding="async">
-    </picture>`;
+/* ── sanity: every catalogue must carry the same keys and counts ──── */
+const ref = all[0];
+const problems = [];
+
+/** Plural sets legitimately differ by language (pl: one/few/many). */
+function checkPlural(code, obj, p) {
+  const ok = obj && obj.one && (obj.other || (obj.few && obj.many));
+  if (!ok) problems.push(`${code}: ${p} needs one + (other | few & many)`);
+  for (const [k, v] of Object.entries(obj || {})) {
+    if (!/\{n\}/.test(v)) problems.push(`${code}: ${p}.${k} is missing {n}`);
+  }
 }
 
-/* ── the six feature cards ─────────────────────────────────────────── */
-const CARDS = [
-  ['p10', 'Whirlpool bath',
-   'A whirlpool bath set into the open plan, with a large walk-in shower alongside.'],
-  ['p16', 'Private cinema',
-   'A real cinema corner: a big screen and immersive sound, for the two of you.'],
-  ['p04', 'Heated pool, in season',
-   'An 8 × 4 m heated outdoor pool with a cover and pool toys — the owners’ pool, shared and open at set hours.'],
-  ['p07', 'Covered terrace',
-   'A private covered terrace over the fields, and a small garden with nothing facing it.'],
-  ['p14', 'Equipped kitchen',
-   'A fitted kitchen, so you needn’t leave unless you feel like it.'],
-  ['p05', 'Mirror architecture',
-   'Mirrored cladding that hands the fields, the hedgerows and the weather straight back to you.'],
-];
-
-const CARD_SIZES = '(max-width: 640px) 92vw, (max-width: 1080px) 46vw, 31vw';
-const cardsHtml = CARDS.map(([n, h3, p]) => `
-      <li class="card reveal">
-        <div class="card__img">${pic(n, CARD_SIZES)}</div>
-        <div class="card__body">
-          <h3>${h3}</h3>
-          <p>${p}</p>
-        </div>
-      </li>`).join('');
-
-/* ── gallery ───────────────────────────────────────────────────────── */
-// Portrait frames get a taller cell so the mosaic doesn't crop them to strips.
-const GAL_SIZES = '(max-width: 640px) 92vw, (max-width: 1080px) 46vw, 30vw';
-const galleryHtml = M.map((m, i) => {
-  const tall = m.h / m.w > 1.15;
-  const wide = m.w / m.h > 1.25;
-  const cls = tall ? ' grid__i--tall' : (wide && i % 5 === 0 ? ' grid__i--wide' : '');
-  return `
-      <li class="grid__i${cls}">
-        <button class="grid__btn" type="button" data-i="${i}"
-                aria-label="Open photo: ${esc(m.alt)}">
-          ${pic(m.name, GAL_SIZES)}
-          <span class="grid__cap">${esc(m.alt)}</span>
-        </button>
-      </li>`;
-}).join('');
-
-/* ── about figure ──────────────────────────────────────────────────── */
-const aboutHtml = `
-      ${pic('p00', '(max-width: 820px) 92vw, 46vw')}
-      <figcaption>${esc(by.p00.alt)}</figcaption>`;
-
-/* ── data the lightbox needs at runtime ────────────────────────────── */
-const lbData = M.map((m) => ({
-  s: `./assets/img/${m.name}-1600.jpg`,
-  w: `./assets/img/${m.name}-1600.webp`,
-  a: m.alt,
-}));
-
-/* ── write ─────────────────────────────────────────────────────────── */
-const file = path.join(ROOT, 'index.html');
-let html = fs.readFileSync(file, 'utf8');
-
-function inject(marker, content) {
-  const open = `<!--${marker}-->`;
-  const close = `<!--/${marker}-->`;
-  const re = new RegExp(open.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&')
-    + '[\\s\\S]*?' + close.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&'));
-  const block = open + content + '\n    ' + close;
-  if (re.test(html)) html = html.replace(re, block);
-  else if (html.includes(open)) html = html.replace(open, block);
-  else throw new Error('marker not found: ' + marker);
+function walk(code, a, b, p) {
+  for (const k of Object.keys(a)) {
+    const at = `${p}${k}`;
+    if (at === 'book.nights') { checkPlural(code, b[k], at); continue; }
+    if (!(k in b)) { problems.push(`${code}: missing ${at}`); continue; }
+    const av = a[k], bv = b[k];
+    if (Array.isArray(av)) {
+      if (!Array.isArray(bv)) problems.push(`${code}: ${at} is not an array`);
+      else if (av.length !== bv.length) {
+        problems.push(`${code}: ${at} has ${bv.length} entries, expected ${av.length}`);
+      }
+    } else if (av && typeof av === 'object') {
+      if (bv && typeof bv === 'object') walk(code, av, bv, `${at}.`);
+      else problems.push(`${code}: ${at} is not an object`);
+    } else if (typeof bv !== 'string') {
+      problems.push(`${code}: ${at} is not a string`);
+    }
+  }
+}
+for (const t of all) walk(t.code, ref, t, '');
+if (problems.length) {
+  console.error('Catalogue mismatch:\n  ' + problems.join('\n  '));
+  process.exit(1);
 }
 
-inject('CARDS', cardsHtml);
-inject('GALLERY', galleryHtml);
-inject('ABOUT_IMG', aboutHtml);
-
-// Hand the lightbox its list without an extra round trip.
-const tag = `<script id="lbData" type="application/json">${JSON.stringify(lbData)}</script>`;
-if (/<script id="lbData"[\s\S]*?<\/script>/.test(html)) {
-  html = html.replace(/<script id="lbData"[\s\S]*?<\/script>/, tag);
-} else {
-  html = html.replace('<script src="./main.js" defer></script>',
-    tag + '\n<script src="./main.js" defer></script>');
+/* ── write the pages ──────────────────────────────────────────────── */
+let total = 0;
+for (const t of all) {
+  const html = render(t, all, manifest);
+  const dir = t.dir ? path.join(ROOT, t.dir) : ROOT;
+  fs.mkdirSync(dir, { recursive: true });
+  const file = path.join(dir, 'index.html');
+  fs.writeFileSync(file, html);
+  total += Buffer.byteLength(html);
+  console.log(`  ${(t.dir || '/').padEnd(4)} ${t.name.padEnd(11)} ${(Buffer.byteLength(html) / 1024).toFixed(1)} kB`);
 }
 
-fs.writeFileSync(file, html);
-console.log(`injected ${CARDS.length} cards, ${M.length} gallery frames`);
+/* ── sitemap with hreflang alternates on every entry ──────────────── */
+const urlOf = (t) => (t.dir ? SITE + t.dir + '/' : SITE);
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${all.map((t) => `  <url>
+    <loc>${urlOf(t)}</loc>
+${all.map((o) => `    <xhtml:link rel="alternate" hreflang="${o.code}" href="${urlOf(o)}"/>`).join('\n')}
+    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}"/>
+    <changefreq>monthly</changefreq>
+    <priority>${t.dir ? '0.8' : '1.0'}</priority>
+  </url>`).join('\n')}
+</urlset>
+`;
+fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap);
+
+fs.writeFileSync(path.join(ROOT, 'robots.txt'),
+  `User-agent: *\nAllow: /\n\nSitemap: ${SITE}sitemap.xml\n`);
+
+console.log(`\n${all.length} locales, ${(total / 1024).toFixed(0)} kB of HTML, sitemap + robots written.`);

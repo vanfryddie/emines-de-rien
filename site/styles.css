@@ -152,6 +152,59 @@ button { font: inherit; }
 @media (max-width: 940px) { .nav__links { display: none; } }
 @media (max-width: 400px) { .brand__mark { height: 30px; } }
 
+/* ───────────────────────────────────────────── language switcher ── */
+/* <details> so it opens and the links work with JS disabled. */
+
+.lang { position: relative; flex: none; }
+.lang summary {
+  display: flex; align-items: center; gap: .38rem;
+  padding: .5rem .7rem; border-radius: 999px;
+  border: 1px solid var(--line-2); color: var(--muted);
+  font-size: .84rem; font-weight: 600; letter-spacing: .06em;
+  cursor: pointer; list-style: none;
+  transition: color .25s var(--ease), border-color .25s var(--ease);
+}
+.lang summary::-webkit-details-marker { display: none; }
+.lang summary:hover { color: var(--cream); border-color: var(--gold); }
+.lang[open] summary { color: var(--gold); border-color: var(--gold); }
+.lang summary svg { width: 10px; height: 7px; transition: transform .25s var(--ease); }
+.lang[open] summary svg { transform: rotate(180deg); }
+
+.lang__menu {
+  position: absolute; top: calc(100% + .5rem); right: 0; z-index: 120;
+  min-width: 11rem; margin: 0; padding: .4rem;
+  list-style: none;
+  background: rgba(14,14,22,.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--line-2); border-radius: 12px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.5);
+}
+.lang__menu a {
+  display: block; padding: .5rem .7rem; border-radius: 7px;
+  font-size: .9rem; color: var(--muted); text-decoration: none;
+  transition: background-color .2s var(--ease), color .2s var(--ease);
+}
+.lang__menu a:hover { background: rgba(255,255,255,.06); color: var(--cream); }
+.lang__menu a[aria-current] { color: var(--gold); }
+.lang__menu a[aria-current]::after { content: ' ✓'; }
+
+/* The header gets tight on phones; the CTA is reachable from the hero. */
+@media (max-width: 560px) { .nav__cta { display: none; } }
+
+/* Plain list of languages in the footer — always crawlable. */
+.foot__langs { border-top: 1px solid var(--line); }
+.foot__langs ul {
+  width: min(var(--wrap), 100% - var(--pad) * 2); margin-inline: auto;
+  display: flex; flex-wrap: wrap; gap: .4rem 1.4rem;
+  list-style: none; padding: 1.2rem 0; margin-block: 0;
+}
+.foot__langs a {
+  font-size: .85rem; color: var(--muted-2); text-decoration: none;
+  transition: color .2s var(--ease);
+}
+.foot__langs a:hover { color: var(--gold); }
+.foot__langs a[aria-current] { color: var(--cream); }
+
 /* ────────────────────────────────────────────────────────── hero ── */
 
 .hero {

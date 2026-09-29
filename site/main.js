@@ -1,6 +1,7 @@
 /* Émines de Rien — hero video, parallax, gallery lightbox, direct booking.
-   Everything here is an enhancement: with JS off the poster, the photographs,
-   the copy and every link still work. */
+   Shared by every language: each page ships its own strings in #i18n.
+   Everything here is an enhancement — with JS off the poster, the
+   photographs, the copy and every link still work. */
 (function () {
   'use strict';
 
@@ -26,6 +27,35 @@
   var root = document.documentElement;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+  /* ── this page's strings ───────────────────────────────────────── */
+  var T = {};
+  try {
+    var tEl = document.getElementById('i18n');
+    if (tEl) T = JSON.parse(tEl.textContent);
+  } catch (e) { T = {}; }
+  var LOCALE = T.locale || root.lang || 'en';
+
+  function fill(s, vars) {
+    return String(s || '').replace(/\{(\w+)\}/g, function (m, k) {
+      return (k in vars) ? vars[k] : m;
+    });
+  }
+
+  /** Slavic plural categories differ; Polish needs one / few / many. */
+  function nightsLabel(n) {
+    var f = T.nights || { one: '{n} night', other: '{n} nights' };
+    var form;
+    if (T.code === 'pl') {
+      var m10 = n % 10, m100 = n % 100;
+      if (n === 1) form = f.one;
+      else if (m10 >= 2 && m10 <= 4 && !(m100 >= 12 && m100 <= 14)) form = f.few;
+      else form = f.many;
+    } else {
+      form = (n === 1) ? f.one : (f.other || f.many || f.one);
+    }
+    return fill(form, { n: n });
+  }
+
   /* ── reveals ───────────────────────────────────────────────────── */
   if (!reduced.matches) root.classList.add('js-anim');
 
@@ -49,6 +79,9 @@
 
   /* ── hero video ────────────────────────────────────────────────── */
   var video = document.getElementById('heroVideo');
+  var base = root.lang && document.querySelector('link[rel="stylesheet"]')
+    ? (document.querySelector('link[href$="styles.css"]').getAttribute('href')
+        .replace('styles.css', '')) : './';
 
   function connectionIsThin() {
     var c = navigator.connection;
@@ -65,9 +98,9 @@
 
     var narrow = window.matchMedia('(max-width: 899px)').matches;
     var sources = narrow
-      ? [['./assets/hero-720.mp4', 'video/mp4']]
-      : [['./assets/hero-1080.webm', 'video/webm'],
-         ['./assets/hero-1080.mp4', 'video/mp4']];
+      ? [[base + 'assets/hero-720.mp4', 'video/mp4']]
+      : [[base + 'assets/hero-1080.webm', 'video/webm'],
+         [base + 'assets/hero-1080.mp4', 'video/mp4']];
 
     sources.forEach(function (s) {
       var el = document.createElement('source');
@@ -97,7 +130,6 @@
     if (p && typeof p.catch === 'function') p.catch(function () {});
   }
 
-  // Don't decode a hero nobody is looking at.
   var hero = document.querySelector('.hero');
   if (video && hero && 'IntersectionObserver' in window) {
     new IntersectionObserver(function (entries) {
@@ -131,8 +163,8 @@
   var ticking = false, lastReq = 0;
   function request() {
     var now = Date.now();
-    // If a frame was requested but never delivered — a hidden tab, a pane that
-    // isn't painting — don't let the pending flag wedge the listener forever.
+    // If a frame was requested but never delivered — a hidden tab, a pane
+    // that isn't painting — don't let the flag wedge the listener forever.
     if (ticking && now - lastReq < 400) return;
     ticking = true;
     lastReq = now;
@@ -152,7 +184,7 @@
     var progress = (vh / 2 - (rect.top + rect.height / 2)) / ((vh + rect.height) / 2);
     if (progress < -1) progress = -1; else if (progress > 1) progress = 1;
 
-    // Softer travel on phones, where the viewport is short and scroll is fast.
+    // Softer travel on phones, where the viewport is short and scroll fast.
     var range = window.innerWidth < 700 ? 52 : 108;
 
     for (var i = 0; i < layers.length; i++) {
@@ -176,6 +208,20 @@
 
   update();
 
+  /* ── language menu: close on outside click / Escape ────────────── */
+  var lang = document.querySelector('.lang');
+  if (lang) {
+    document.addEventListener('click', function (e) {
+      if (lang.open && !lang.contains(e.target)) lang.open = false;
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lang.open) {
+        lang.open = false;
+        lang.querySelector('summary').focus();
+      }
+    });
+  }
+
   /* ── gallery lightbox ──────────────────────────────────────────── */
 
   var lbData = [];
@@ -196,7 +242,8 @@
     var d = lbData[lbIndex];
     lbImg.src = d.s;
     lbImg.alt = d.a;
-    lbCap.textContent = d.a + ' — ' + (lbIndex + 1) + ' of ' + lbData.length;
+    lbCap.textContent = d.a + ' — '
+      + fill(T.of || '{i} of {n}', { i: lbIndex + 1, n: lbData.length });
   }
 
   function lbOpen(i) {
@@ -233,7 +280,6 @@
       else if (e.key === 'ArrowLeft') lbShow(lbIndex - 1);
       else if (e.key === 'ArrowRight') lbShow(lbIndex + 1);
       else if (e.key === 'Tab') {
-        // Keep focus inside the dialog while it is open.
         var f = lb.querySelectorAll('button');
         var first = f[0], last = f[f.length - 1];
         if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
@@ -241,7 +287,6 @@
       }
     });
 
-    // Swipe on touch.
     var tx = 0, ty = 0;
     lb.addEventListener('touchstart', function (e) {
       tx = e.changedTouches[0].clientX; ty = e.changedTouches[0].clientY;
@@ -271,10 +316,10 @@
       return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m
         + '-' + (day < 10 ? '0' : '') + day;
     };
+
     var today = new Date();
-    var tomorrow = new Date(today.getTime() + 864e5);
     elIn.min = iso(today);
-    elOut.min = iso(tomorrow);
+    elOut.min = iso(new Date(today.getTime() + 864e5));
 
     function nightsBetween() {
       if (!elIn.value || !elOut.value) return 0;
@@ -285,15 +330,12 @@
 
     function syncDates() {
       if (elIn.value) {
-        // Check-out must be at least the night after arrival.
         var next = new Date(new Date(elIn.value + 'T00:00:00').getTime() + 864e5);
         elOut.min = iso(next);
         if (elOut.value && elOut.value <= elIn.value) elOut.value = iso(next);
       }
       var n = nightsBetween();
-      elNights.textContent = n > 0
-        ? n + (n === 1 ? ' night' : ' nights') + ' · arrive from 17:00, leave by 11:00'
-        : '';
+      elNights.textContent = n > 0 ? nightsLabel(n) + ' · ' + (T.arrive || '') : '';
     }
     elIn.addEventListener('change', syncDates);
     elOut.addEventListener('change', syncDates);
@@ -301,25 +343,26 @@
 
     function fmt(d) {
       try {
-        return new Date(d + 'T00:00:00')
-          .toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
+        return new Date(d + 'T00:00:00').toLocaleDateString(LOCALE,
+          { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
       } catch (e) { return d; }
     }
 
     function compose(v) {
+      var c = T.c || {};
       return [
-        'Booking request — Émines de Rien',
+        c.head || 'Booking request — Émines de Rien',
         '',
-        'Check-in:  ' + fmt(v.checkin) + ' (from 17:00)',
-        'Check-out: ' + fmt(v.checkout) + ' (by 11:00)',
-        'Nights:    ' + v.nights,
-        'Guests:    ' + v.guests,
+        (c.in || 'Check-in') + ':  ' + fmt(v.checkin) + ' (' + (c.from || '') + ')',
+        (c.out || 'Check-out') + ': ' + fmt(v.checkout) + ' (' + (c.by || '') + ')',
+        (c.nights || 'Nights') + ':    ' + v.nights,
+        (c.guests || 'Guests') + ':    ' + v.guests,
         '',
-        'Name:  ' + v.name,
-        'Email: ' + v.email,
-        'Phone: ' + (v.phone || '—'),
+        (c.name || 'Name') + ':  ' + v.name,
+        (c.email || 'Email') + ': ' + v.email,
+        (c.phone || 'Phone') + ': ' + (v.phone || '—'),
         '',
-        'Message:',
+        (c.msg || 'Message') + ':',
         (v.message || '—'),
       ].join('\n');
     }
@@ -351,23 +394,24 @@
         email: document.getElementById('bkEmail').value.trim(),
         phone: document.getElementById('bkPhone').value.trim(),
         message: document.getElementById('bkMsg').value.trim(),
+        lang: T.code || root.lang,
       };
 
-      if (!v.checkin) return invalid(elIn, 'Please choose your arrival date.');
-      if (!v.checkout) return invalid(elOut, 'Please choose your departure date.');
-      if (v.nights < 1) return invalid(elOut, 'Check-out needs to be after check-in.');
-      if (!v.name) return invalid(document.getElementById('bkName'), 'Please add your name.');
+      if (!v.checkin) return invalid(elIn, T.errIn);
+      if (!v.checkout) return invalid(elOut, T.errOut);
+      if (v.nights < 1) return invalid(elOut, T.errOrder);
+      if (!v.name) return invalid(document.getElementById('bkName'), T.errName);
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email)) {
-        return invalid(document.getElementById('bkEmail'), 'Please check your email address.');
+        return invalid(document.getElementById('bkEmail'), T.errEmail);
       }
 
       var body = compose(v);
-      var subject = 'Booking request — ' + v.checkin + ' to ' + v.checkout
-        + ' (' + v.guests + ' guests)';
+      var subject = fill(T.subject || 'Booking request — {a} to {b} ({g} guests)',
+        { a: v.checkin, b: v.checkout, g: v.guests });
 
       if (BOOKING.endpoint) {
         elSubmit.disabled = true;
-        setStatus('Sending your request…');
+        setStatus(T.sending);
         fetch(BOOKING.endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
@@ -375,9 +419,9 @@
         }).then(function (r) {
           if (!r.ok) throw new Error(r.status);
           form.reset(); syncDates();
-          setStatus('Thank you — your request is on its way. Céline & Stéphane usually reply within the hour.', 'ok');
+          setStatus(T.sent, 'ok');
         }).catch(function () {
-          setStatus('That didn’t go through. Please try again in a moment.', 'err');
+          setStatus(T.failed, 'err');
           offerCopy(body);
         }).then(function () { elSubmit.disabled = false; });
         return;
@@ -387,13 +431,13 @@
         window.location.href = 'mailto:' + BOOKING.email
           + '?subject=' + encodeURIComponent(subject)
           + '&body=' + encodeURIComponent(body);
-        setStatus('Your mail app should be opening with the request filled in. If nothing happens, copy it below.', 'ok');
+        setStatus(T.mailHint, 'ok');
         offerCopy(body);
         return;
       }
 
       // Nothing configured yet — never leave the guest at a dead end.
-      setStatus('Your request is ready to send — copy it across and we’ll confirm your dates.', 'ok');
+      setStatus(T.ready, 'ok');
       offerCopy(body);
     });
 
@@ -404,17 +448,20 @@
         box.id = 'bkCopy';
         box.className = 'copybox';
         box.setAttribute('readonly', '');
-        box.setAttribute('aria-label', 'Your booking request');
+        box.setAttribute('aria-label', T.copyLabel || 'Your booking request');
         elStatus.after(box);
 
         var b = document.createElement('button');
         b.type = 'button';
         b.className = 'btn btn--ghost btn--sm';
         b.style.marginTop = '.7rem';
-        b.textContent = 'Copy request';
+        b.textContent = T.copy || 'Copy request';
         b.addEventListener('click', function () {
           box.select();
-          var done = function () { b.textContent = 'Copied ✓'; setTimeout(function () { b.textContent = 'Copy request'; }, 2200); };
+          var done = function () {
+            b.textContent = T.copied || 'Copied';
+            setTimeout(function () { b.textContent = T.copy || 'Copy request'; }, 2200);
+          };
           if (navigator.clipboard) navigator.clipboard.writeText(box.value).then(done, done);
           else { try { document.execCommand('copy'); done(); } catch (e) {} }
         });
