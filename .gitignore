@@ -8,3 +8,6 @@ render/contact-sheet.jpg
 render/icon-check.png
 emines-de-rien-site.zip
 package-lock.json
+.claude-flow/
+.claude/proven-config.json
+.claude/.proven-config-version
