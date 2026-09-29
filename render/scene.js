@@ -320,7 +320,10 @@ function drawSky(ctx, W, H, horizon, phase, A, drift) {
 
 /** Treeline + far field, drawn under the cabin. */
 function drawLand(ctx, W, H, horizon, A, drift) {
-  const bandH = H * 0.052;
+  // Scaled off the width, not the height: the hedgerow is a horizontal
+  // feature, and keying it to H makes it spike in a portrait frame.
+  // At 16:9 this is the same 56px it always was.
+  const bandH = W * 0.029;
 
   // A far, paler hedge line first — aerial perspective gives the field depth.
   ctx.fillStyle = 'rgba(28,46,56,0.85)';
