@@ -28,3 +28,8 @@ config.php
 .env
 var/
 *.local.php
+
+# local dev runtimes — never committed
+php/
+php83/
+php*.zip

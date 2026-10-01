@@ -2,6 +2,7 @@
 /* Français — la langue des hôtes. */
 module.exports = {
   code: 'fr', name: 'Français', locale: 'fr-BE', dir: 'fr', dec: ',',
+  timeFmt: '{h}h{m}',
 
   meta: {
     title: 'Émines de Rien — hébergement insolite pour deux · La Bruyère, Belgique',
@@ -23,7 +24,7 @@ module.exports = {
     lede: 'Un écrin miroir pour deux, au milieu des champs de Hesbaye, aux portes de Namur. Le bardage happe le ciel, et la soirée n’appartient qu’à vous.',
     facts: ['2 voyageurs', '1 chambre', '1 lit queen size', '1 salle de bain', 'Logement entier'],
     ctaBook: 'Demander vos dates', ctaSee: 'Découvrir la maison',
-    rating: '{v} sur 6 avis de voyageurs',
+    rating: '{v} sur {reviewCount} avis de voyageurs',
     cue: 'Faire défiler vers la maison',
     videoAlt: 'La maison miroir au crépuscule, sa fenêtre éclairée se reflétant dans la piscine, les herbes ondulant au premier plan.',
   },
@@ -37,8 +38,8 @@ module.exports = {
       'Le gîte est entièrement à vous, en toute intimité, avec une terrasse couverte ouverte sur les champs et un petit jardin privatif sans vis-à-vis.',
     ],
     stats: [
-      ['Note', '{rating}'], ['Avis', '6'],
-      ['Hôtes depuis', '3 ans'], ['Réponse', '&lt;1 h'],
+      ['Note', '{rating}'], ['Avis', '{reviewCount}'],
+      ['Hôtes depuis', '{hostingYears} ans'], ['Réponse', '&lt;1 h'],
     ],
   },
 
@@ -47,7 +48,7 @@ module.exports = {
     cards: [
       ['Baignoire balnéo', 'Une baignoire balnéo intégrée à l’espace ouvert, avec une grande douche à l’italienne juste à côté.'],
       ['Cinéma privé', 'Un vrai coin cinéma : grand écran et son immersif, rien que pour vous deux.'],
-      ['Piscine chauffée, en saison', 'Une piscine extérieure chauffée de 8 × 4 m avec bâche et jeux de piscine — celle des propriétaires, partagée et accessible à certaines heures.'],
+      ['Piscine chauffée, en saison', 'Une piscine extérieure chauffée de {poolSize} m avec bâche et jeux de piscine — celle des propriétaires, partagée et accessible à certaines heures.'],
       ['Terrasse couverte', 'Une terrasse couverte privative ouverte sur les champs, et un petit jardin sans vis-à-vis.'],
       ['Cuisine équipée', 'Une cuisine équipée, pour ne sortir que si l’envie vous prend.'],
       ['Architecture miroir', 'Un bardage miroir qui vous rend les champs, les haies et le ciel tels quels.'],
@@ -83,8 +84,8 @@ module.exports = {
 
   reviews: {
     eyebrow: 'Avis', h2: 'Six séjours, six avis cinq étoiles',
-    scores: [['{5.0}', 'Propreté'], ['{5.0}', 'Arrivée'], ['{5.0}', 'Communication'],
-             ['{4.8}', 'Exactitude'], ['{4.8}', 'Rapport qualité-prix'], ['{4.7}', 'Emplacement']],
+    scores: [['{cleanliness}', 'Propreté'], ['{checkin}', 'Arrivée'], ['{communication}', 'Communication'],
+             ['{accuracy}', 'Exactitude'], ['{value}', 'Rapport qualité-prix'], ['{location}', 'Emplacement']],
     starsLabel: 'Noté 5 sur 5',
     quotes: [
       ['« C’était absolument parfait. Les hôtes ont été incroyablement gentils et accueillants, ils nous ont vraiment mis à l’aise. Le lieu lui-même est magnifique et si paisible, niché dans un joli petit village juste à côté de Namur. L’un de nos moments préférés a été de nous réveiller le matin et de voir les chevaux venir nous rendre visite — on aurait vraiment dit un rêve. »', 'Raees'],
@@ -97,7 +98,7 @@ module.exports = {
   book: {
     eyebrow: 'Réservation directe', h2: 'Demandez vos dates',
     intro: 'Indiquez à Céline &amp; Stéphane quand vous souhaitez venir : ils confirmeront la disponibilité et le prix pour vos nuits. Ils répondent à chaque demande, en général dans l’heure.',
-    ticks: ['Toute la maison, rien que pour vous deux', 'Arrivée entre 17h00 et 20h00', 'Parking gratuit sur place'],
+    ticks: ['Toute la maison, rien que pour vous deux', 'Arrivée entre {checkinFrom} et {checkinUntil}', 'Parking gratuit sur place'],
     lIn: 'Arrivée', lOut: 'Départ', lGuests: 'Voyageurs',
     g1: '1 voyageur', g2: '2 voyageurs', hint: 'La maison accueille deux personnes.',
     lName: 'Votre nom', lEmail: 'E-mail', lPhone: 'Téléphone', opt: '(facultatif)',
@@ -123,8 +124,8 @@ module.exports = {
 
   visit: {
     eyebrow: 'Infos pratiques', h2: 'Arrivée &amp; horaires',
-    rows: [['Arrivée', '17h00 – 20h00'], ['Départ', 'Avant 11h00'],
-           ['Voyageurs', '2 maximum'], ['Piscine', 'En saison, à certaines heures']],
+    rows: [['Arrivée', '{checkinWindow}'], ['Départ', 'Avant {checkoutBy}'],
+           ['Voyageurs', '{maxGuests} maximum'], ['Piscine', 'En saison, à certaines heures']],
     note: 'Bon à savoir : un détecteur de fumée est installé. Il n’y a pas de détecteur de monoxyde de carbone, et la piscine et le jacuzzi ne sont ni clôturés ni verrouillés.',
     whereEyebrow: 'Où', whereH2: 'La Bruyère,<br>aux portes de Namur',
     whereP: 'La pleine campagne du plateau hesbignon, à quelques minutes de Namur — les voyageurs le décrivent comme niché dans un petit village tranquille. Parking gratuit sur place. L’adresse exacte vous est envoyée une fois le séjour confirmé.',

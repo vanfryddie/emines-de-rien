@@ -2,6 +2,7 @@
 /* Nederlands. */
 module.exports = {
   code: 'nl', name: 'Nederlands', locale: 'nl-BE', dir: 'nl', dec: ',',
+  timeFmt: '{h}.{m} uur',
 
   meta: {
     title: 'Émines de Rien — bijzonder verblijf voor twee · La Bruyère, België',
@@ -23,7 +24,7 @@ module.exports = {
     lede: 'Een tiny house met spiegelgevel voor twee, midden in de velden van Haspengouw vlak bij Namur. De bekleding vangt de hemel op, en de avond is helemaal van jullie.',
     facts: ['2 gasten', '1 slaapkamer', '1 queensize bed', '1 badkamer', 'Volledige woning'],
     ctaBook: 'Vraag je data aan', ctaSee: 'Bekijk het huis',
-    rating: '{v} uit 6 gastenbeoordelingen',
+    rating: '{v} uit {reviewCount} gastenbeoordelingen',
     cue: 'Scroll naar het huis',
     videoAlt: 'Het spiegelhuis in de schemering, het verlichte raam weerspiegeld in het zwembad, met wuivend gras op de voorgrond.',
   },
@@ -37,8 +38,8 @@ module.exports = {
       'Het hele vakantiehuis is van jullie, in alle privacy, met een overdekt terras over de velden en een kleine privétuin zonder inkijk.',
     ],
     stats: [
-      ['Beoordeling', '{rating}'], ['Beoordelingen', '6'],
-      ['Gastheer sinds', '3 jaar'], ['Reactietijd', '&lt;1 u'],
+      ['Beoordeling', '{rating}'], ['Beoordelingen', '{reviewCount}'],
+      ['Gastheer sinds', '{hostingYears} jaar'], ['Reactietijd', '&lt;1 u'],
     ],
   },
 
@@ -47,7 +48,7 @@ module.exports = {
     cards: [
       ['Bubbelbad', 'Een bubbelbad midden in de open ruimte, met een ruime inloopdouche ernaast.'],
       ['Privébioscoop', 'Een echte bioscoophoek: groot scherm en meeslepend geluid, alleen voor jullie twee.'],
-      ['Verwarmd zwembad, in het seizoen', 'Een verwarmd buitenzwembad van 8 × 4 m met afdekzeil en zwemspeelgoed — het zwembad van de eigenaars, gedeeld en open op vaste uren.'],
+      ['Verwarmd zwembad, in het seizoen', 'Een verwarmd buitenzwembad van {poolSize} m met afdekzeil en zwemspeelgoed — het zwembad van de eigenaars, gedeeld en open op vaste uren.'],
       ['Overdekt terras', 'Een eigen overdekt terras over de velden, en een kleine tuin zonder inkijk.'],
       ['Uitgeruste keuken', 'Een volledig uitgeruste keuken, zodat je alleen naar buiten hoeft als je er zin in hebt.'],
       ['Spiegelarchitectuur', 'Een spiegelgevel die de velden, de hagen en het weer onverbloemd teruggeeft.'],
@@ -83,8 +84,8 @@ module.exports = {
 
   reviews: {
     eyebrow: 'Gasten', h2: 'Zes verblijven, zes vijfsterrenbeoordelingen',
-    scores: [['{5.0}', 'Netheid'], ['{5.0}', 'Inchecken'], ['{5.0}', 'Communicatie'],
-             ['{4.8}', 'Correctheid'], ['{4.8}', 'Prijs-kwaliteit'], ['{4.7}', 'Locatie']],
+    scores: [['{cleanliness}', 'Netheid'], ['{checkin}', 'Inchecken'], ['{communication}', 'Communicatie'],
+             ['{accuracy}', 'Correctheid'], ['{value}', 'Prijs-kwaliteit'], ['{location}', 'Locatie']],
     starsLabel: 'Beoordeeld met 5 van de 5',
     quotes: [
       ['„Het was absoluut perfect. De gastheren waren ongelooflijk vriendelijk en gastvrij en zorgden ervoor dat we ons meteen thuis voelden. De plek zelf is prachtig en zo rustig, verscholen in een mooi klein dorp net buiten Namur. Een van onze favoriete momenten was ’s ochtends wakker worden en de paarden langs zien komen om ons te begroeten — het voelde echt als een droom.”', 'Raees'],
@@ -97,7 +98,7 @@ module.exports = {
   book: {
     eyebrow: 'Rechtstreeks boeken', h2: 'Vraag je data aan',
     intro: 'Laat Céline &amp; Stéphane weten wanneer je wilt komen — zij bevestigen de beschikbaarheid en de prijs voor jouw nachten. Ze beantwoorden elke aanvraag, meestal binnen het uur.',
-    ticks: ['Het hele huis, alleen voor jullie twee', 'Aankomst tussen 17.00 en 20.00 uur', 'Gratis parkeren op het terrein'],
+    ticks: ['Het hele huis, alleen voor jullie twee', 'Aankomst tussen {checkinFromBare} en {checkinUntil}', 'Gratis parkeren op het terrein'],
     lIn: 'Aankomst', lOut: 'Vertrek', lGuests: 'Gasten',
     g1: '1 gast', g2: '2 gasten', hint: 'Het huis biedt plaats aan twee.',
     lName: 'Je naam', lEmail: 'E-mail', lPhone: 'Telefoon', opt: '(optioneel)',
@@ -123,8 +124,8 @@ module.exports = {
 
   visit: {
     eyebrow: 'Praktisch', h2: 'Aankomst &amp; uren',
-    rows: [['Inchecken', '17.00 – 20.00 uur'], ['Uitchecken', 'Vóór 11.00 uur'],
-           ['Gasten', 'Maximaal 2'], ['Zwembad', 'Seizoensgebonden, op vaste uren']],
+    rows: [['Inchecken', '{checkinWindow}'], ['Uitchecken', 'Vóór {checkoutBy}'],
+           ['Gasten', 'Maximaal {maxGuests}'], ['Zwembad', 'Seizoensgebonden, op vaste uren']],
     note: 'Goed om te weten: er is een rookmelder aanwezig. Er is geen koolmonoxidemelder, en het zwembad en de bubbelbad zijn niet omheind of afgesloten.',
     whereEyebrow: 'Waar', whereH2: 'La Bruyère,<br>vlak bij Namur',
     whereP: 'Open platteland op het plateau van Haspengouw, op een paar minuten van Namur — gasten omschrijven het als verscholen in een rustig dorpje. Gratis parkeren op het terrein. Het exacte adres krijg je zodra je verblijf bevestigd is.',

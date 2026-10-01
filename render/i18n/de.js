@@ -3,6 +3,7 @@
    die Airbnb selbst ausliefert — nicht neu übersetzt. */
 module.exports = {
   code: 'de', name: 'Deutsch', locale: 'de-DE', dir: 'de', dec: ',',
+  timeFmt: '{h}:{m} Uhr',
 
   meta: {
     title: 'Émines de Rien — ungewöhnliche Unterkunft für zwei · La Bruyère, Belgien',
@@ -24,7 +25,7 @@ module.exports = {
     lede: 'Ein Tiny House mit Spiegelfassade für zwei, mitten in den Feldern der Hesbaye vor Namur. Die Verkleidung nimmt den Himmel auf — und der Abend gehört ganz Ihnen.',
     facts: ['2 Gäste', '1 Schlafzimmer', '1 Queensize-Bett', '1 Bad', 'Gesamte Unterkunft'],
     ctaBook: 'Termine anfragen', ctaSee: 'Das Haus ansehen',
-    rating: '{v} aus 6 Gästebewertungen',
+    rating: '{v} aus {reviewCount} Gästebewertungen',
     cue: 'Weiter zum Haus',
     videoAlt: 'Das Spiegelhaus in der Dämmerung, sein erleuchtetes Fenster spiegelt sich im Pool, während im Vordergrund Gräser wehen.',
   },
@@ -38,8 +39,8 @@ module.exports = {
       'Das gesamte Ferienhaus gehört Ihnen, in völliger Privatsphäre, dazu eine überdachte Terrasse mit Blick über die Felder und ein kleiner privater Garten ohne Gegenüber.',
     ],
     stats: [
-      ['Bewertung', '{rating}'], ['Bewertungen', '6'],
-      ['Gastgeber seit', '3 J.'], ['Antwortzeit', '&lt;1 Std.'],
+      ['Bewertung', '{rating}'], ['Bewertungen', '{reviewCount}'],
+      ['Gastgeber seit', '{hostingYears} J.'], ['Antwortzeit', '&lt;1 Std.'],
     ],
   },
 
@@ -48,7 +49,7 @@ module.exports = {
     cards: [
       ['Whirlpool-Badewanne', 'Eine Whirlpool-Badewanne mitten im offenen Raum, daneben eine große ebenerdige Dusche.'],
       ['Privates Kino', 'Ein echter Kinobereich: Großbildschirm und immersiver Klang, nur für Sie beide.'],
-      ['Beheizter Pool, in der Saison', 'Ein beheizter Außenpool von 8 × 4 m mit Abdeckung und Poolspielzeug — der Pool der Eigentümer, gemeinsam genutzt und zu bestimmten Zeiten geöffnet.'],
+      ['Beheizter Pool, in der Saison', 'Ein beheizter Außenpool von {poolSize} m mit Abdeckung und Poolspielzeug — der Pool der Eigentümer, gemeinsam genutzt und zu bestimmten Zeiten geöffnet.'],
       ['Überdachte Terrasse', 'Eine private überdachte Terrasse über den Feldern und ein kleiner Garten ohne Gegenüber.'],
       ['Einbauküche', 'Eine voll ausgestattete Küche — Sie müssen nur hinaus, wenn Ihnen danach ist.'],
       ['Spiegelarchitektur', 'Eine Spiegelfassade, die Ihnen Felder, Hecken und Wetter unverändert zurückgibt.'],
@@ -84,8 +85,8 @@ module.exports = {
 
   reviews: {
     eyebrow: 'Gäste', h2: 'Sechs Aufenthalte, sechs Fünf-Sterne-Bewertungen',
-    scores: [['{5.0}', 'Sauberkeit'], ['{5.0}', 'Check-in'], ['{5.0}', 'Kommunikation'],
-             ['{4.8}', 'Genauigkeit'], ['{4.8}', 'Preis-Leistung'], ['{4.7}', 'Lage']],
+    scores: [['{cleanliness}', 'Sauberkeit'], ['{checkin}', 'Check-in'], ['{communication}', 'Kommunikation'],
+             ['{accuracy}', 'Genauigkeit'], ['{value}', 'Preis-Leistung'], ['{location}', 'Lage']],
     starsLabel: 'Mit 5 von 5 Sternen bewertet',
     quotes: [
       ['„Es war absolut perfekt. Die Gastgeber waren unglaublich freundlich und einladend und sorgten dafür, dass wir uns wie zuhause fühlten. Die Unterkunft selbst ist wunderschön und so ruhig gelegen, versteckt in einer hübschen kleinen Stadt etwas außerhalb von Namur. Einer unserer Lieblingsmomente war, als wir morgens aufwachten und die Pferde vorbeikamen, um uns zu besuchen – es fühlte sich ehrlich gesagt wie ein Traum an.“', 'Raees'],
@@ -98,7 +99,7 @@ module.exports = {
   book: {
     eyebrow: 'Direkt buchen', h2: 'Termine anfragen',
     intro: 'Sagen Sie Céline &amp; Stéphane, wann Sie kommen möchten — sie bestätigen Verfügbarkeit und Preis für Ihre Nächte. Sie beantworten jede Anfrage, meist innerhalb einer Stunde.',
-    ticks: ['Das ganze Haus, nur für Sie beide', 'Anreise zwischen 17:00 und 20:00 Uhr', 'Kostenlose Parkplätze auf dem Grundstück'],
+    ticks: ['Das ganze Haus, nur für Sie beide', 'Anreise zwischen {checkinFromBare} und {checkinUntil}', 'Kostenlose Parkplätze auf dem Grundstück'],
     lIn: 'Anreise', lOut: 'Abreise', lGuests: 'Gäste',
     g1: '1 Gast', g2: '2 Gäste', hint: 'Das Haus bietet Platz für zwei.',
     lName: 'Ihr Name', lEmail: 'E-Mail', lPhone: 'Telefon', opt: '(optional)',
@@ -124,8 +125,8 @@ module.exports = {
 
   visit: {
     eyebrow: 'Anreise', h2: 'Ankunft &amp; Zeiten',
-    rows: [['Check-in', '17:00 – 20:00 Uhr'], ['Check-out', 'Vor 11:00 Uhr'],
-           ['Gäste', 'Maximal 2'], ['Pool', 'Saisonal, zu bestimmten Zeiten']],
+    rows: [['Check-in', '{checkinWindow}'], ['Check-out', 'Vor {checkoutBy}'],
+           ['Gäste', 'Maximal {maxGuests}'], ['Pool', 'Saisonal, zu bestimmten Zeiten']],
     note: 'Gut zu wissen: Ein Rauchmelder ist vorhanden. Es gibt keinen Kohlenmonoxidmelder, und Pool und Whirlpool sind weder umzäunt noch abschließbar.',
     whereEyebrow: 'Wo', whereH2: 'La Bruyère,<br>vor den Toren Namurs',
     whereP: 'Offenes Land auf dem Plateau der Hesbaye, wenige Minuten von Namur — Gäste beschreiben es als versteckt in einem ruhigen kleinen Ort. Kostenlose Parkplätze auf dem Grundstück. Die genaue Adresse erhalten Sie, sobald Ihr Aufenthalt bestätigt ist.',

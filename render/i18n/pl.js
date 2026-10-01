@@ -2,6 +2,7 @@
 /* Polski. Uwaga na liczbę mnogą: 1 noc / 2–4 noce / 5+ nocy. */
 module.exports = {
   code: 'pl', name: 'Polski', locale: 'pl-PL', dir: 'pl', dec: ',',
+  timeFmt: '{h}:{m}',
 
   meta: {
     title: 'Émines de Rien — nietypowy domek dla dwojga · La Bruyère, Belgia',
@@ -23,7 +24,7 @@ module.exports = {
     lede: 'Lustrzany domek dla dwojga pośród pól Hesbaye, tuż pod Namur. Elewacja wchłania niebo, a wieczór należy wyłącznie do Was.',
     facts: ['2 gości', '1 sypialnia', '1 łóżko queen size', '1 łazienka', 'Cały obiekt'],
     ctaBook: 'Zapytaj o termin', ctaSee: 'Zobacz dom',
-    rating: '{v} z 6 opinii gości',
+    rating: '{v} z {reviewCount} opinii gości',
     cue: 'Przewiń do domu',
     videoAlt: 'Lustrzany dom o zmierzchu, jego rozświetlone okno odbija się w basenie, a na pierwszym planie kołyszą się trawy.',
   },
@@ -37,8 +38,8 @@ module.exports = {
       'Cały domek należy do Was, w pełnej prywatności, wraz z zadaszonym tarasem z widokiem na pola i niewielkim ogrodem bez sąsiadów naprzeciwko.',
     ],
     stats: [
-      ['Ocena', '{rating}'], ['Opinie', '6'],
-      ['Gospodarze od', '3 lat'], ['Odpowiedź', '&lt;1 godz.'],
+      ['Ocena', '{rating}'], ['Opinie', '{reviewCount}'],
+      ['Gospodarze od', '{hostingYears} lat'], ['Odpowiedź', '&lt;1 godz.'],
     ],
   },
 
@@ -47,7 +48,7 @@ module.exports = {
     cards: [
       ['Wanna z hydromasażem', 'Wanna z hydromasażem wkomponowana w otwartą przestrzeń, obok duży prysznic bez brodzika.'],
       ['Prywatne kino', 'Prawdziwy kącik kinowy: duży ekran i dźwięk przestrzenny, tylko dla Was dwojga.'],
-      ['Podgrzewany basen, w sezonie', 'Podgrzewany basen zewnętrzny 8 × 4 m z pokrywą i zabawkami — basen właścicieli, współdzielony i otwarty w wyznaczonych godzinach.'],
+      ['Podgrzewany basen, w sezonie', 'Podgrzewany basen zewnętrzny {poolSize} m z pokrywą i zabawkami — basen właścicieli, współdzielony i otwarty w wyznaczonych godzinach.'],
       ['Zadaszony taras', 'Prywatny zadaszony taras nad polami i mały ogród bez sąsiadów naprzeciwko.'],
       ['Wyposażona kuchnia', 'W pełni wyposażona kuchnia — wychodzicie tylko wtedy, gdy macie ochotę.'],
       ['Architektura lustrzana', 'Lustrzana elewacja, która oddaje Wam pola, żywopłoty i pogodę bez zmian.'],
@@ -83,8 +84,8 @@ module.exports = {
 
   reviews: {
     eyebrow: 'Opinie', h2: 'Sześć pobytów, sześć ocen na pięć gwiazdek',
-    scores: [['{5.0}', 'Czystość'], ['{5.0}', 'Zameldowanie'], ['{5.0}', 'Komunikacja'],
-             ['{4.8}', 'Zgodność z opisem'], ['{4.8}', 'Stosunek jakości do ceny'], ['{4.7}', 'Lokalizacja']],
+    scores: [['{cleanliness}', 'Czystość'], ['{checkin}', 'Zameldowanie'], ['{communication}', 'Komunikacja'],
+             ['{accuracy}', 'Zgodność z opisem'], ['{value}', 'Stosunek jakości do ceny'], ['{location}', 'Lokalizacja']],
     starsLabel: 'Ocena 5 na 5',
     quotes: [
       ['„Było absolutnie idealnie. Gospodarze byli niezwykle mili i gościnni, sprawili, że poczuliśmy się jak u siebie. Samo miejsce jest piękne i tak spokojne, ukryte w uroczej miejscowości tuż pod Namur. Jednym z naszych ulubionych momentów był poranek, gdy obudziliśmy się, a konie przyszły nas odwiedzić — naprawdę czuliśmy się jak we śnie.”', 'Raees'],
@@ -97,7 +98,7 @@ module.exports = {
   book: {
     eyebrow: 'Rezerwacja bezpośrednia', h2: 'Zapytaj o termin',
     intro: 'Napiszcie Céline &amp; Stéphane, kiedy chcielibyście przyjechać — potwierdzą dostępność i cenę za Wasze noclegi. Odpowiadają na każde zapytanie, zwykle w ciągu godziny.',
-    ticks: ['Cały dom, tylko dla Was dwojga', 'Przyjazd między 17:00 a 20:00', 'Bezpłatny parking na terenie obiektu'],
+    ticks: ['Cały dom, tylko dla Was dwojga', 'Przyjazd między {checkinFrom} a {checkinUntil}', 'Bezpłatny parking na terenie obiektu'],
     lIn: 'Przyjazd', lOut: 'Wyjazd', lGuests: 'Goście',
     g1: '1 gość', g2: '2 gości', hint: 'Dom przeznaczony jest dla dwóch osób.',
     lName: 'Imię i nazwisko', lEmail: 'E-mail', lPhone: 'Telefon', opt: '(opcjonalnie)',
@@ -123,8 +124,8 @@ module.exports = {
 
   visit: {
     eyebrow: 'Przyjazd', h2: 'Przyjazd i godziny',
-    rows: [['Zameldowanie', '17:00 – 20:00'], ['Wymeldowanie', 'Do 11:00'],
-           ['Goście', 'Maksymalnie 2'], ['Basen', 'Sezonowo, w wyznaczonych godzinach']],
+    rows: [['Zameldowanie', '{checkinWindow}'], ['Wymeldowanie', 'Do {checkoutBy}'],
+           ['Goście', 'Maksymalnie {maxGuests}'], ['Basen', 'Sezonowo, w wyznaczonych godzinach']],
     note: 'Warto wiedzieć: w domu jest czujnik dymu. Nie ma czujnika tlenku węgla, a basen i wanna z hydromasażem nie są ogrodzone ani zamykane.',
     whereEyebrow: 'Gdzie', whereH2: 'La Bruyère,<br>tuż pod Namur',
     whereP: 'Otwarta wieś na płaskowyżu Hesbaye, kilka minut od Namur — goście opisują to miejsce jako ukryte w spokojnej miejscowości. Bezpłatny parking na terenie obiektu. Dokładny adres otrzymacie po potwierdzeniu pobytu.',

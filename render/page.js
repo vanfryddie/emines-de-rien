@@ -4,7 +4,9 @@
  * engines can index each language and the site works with JS disabled.
  */
 
-const SITE = 'https://vanfryddie.github.io/emines-de-rien/';
+const settings = require('./settings');
+const SETTINGS = settings.load();
+const SITE = SETTINGS.site.url;
 
 const esc = (s) => String(s).replace(/&(?!(amp|lt|gt|quot|#\d+);)/g, '&amp;')
   .replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -39,6 +41,7 @@ const CARD_SIZES = '(max-width: 640px) 92vw, (max-width: 1080px) 46vw, 31vw';
 const GAL_SIZES = '(max-width: 640px) 92vw, (max-width: 1080px) 46vw, 30vw';
 
 function render(t, all, manifest) {
+  const S = SETTINGS;
   const base = t.dir ? '../' : './';
   const here = t.dir ? SITE + t.dir + '/' : SITE;
   const by = Object.fromEntries(manifest.map((m) => [m.name, m]));
@@ -84,8 +87,10 @@ function render(t, all, manifest) {
   }).join('');
 
   const facts = t.hero.facts.map((f) => `<li>${raw(f)}</li>`).join('');
+  // Placeholders are already resolved from settings in build.js; nothing is
+  // interpolated here. A literal fallback would silently mask a settings change.
   const stats = t.about.stats.map(([k, v]) =>
-    `<div><dt>${raw(k)}</dt><dd>${raw(tpl(v, { rating: num('5.0', t) }))}</dd></div>`).join('');
+    `<div><dt>${raw(k)}</dt><dd>${raw(v)}</dd></div>`).join('');
   const scores = t.reviews.scores.map(([v, l]) =>
     `<li><span>${num(v.replace(/[{}]/g, ''), t)}</span> ${raw(l)}</li>`).join('\n      ');
   const quotes = t.reviews.quotes.map(([q, who], i) => `
@@ -120,12 +125,17 @@ function render(t, all, manifest) {
     image: SITE + 'assets/og.jpg',
     slogan: 'Écrin miroir · Balnéo · Cinéma privé',
     description: t.meta.schemaDesc,
-    address: { '@type': 'PostalAddress', addressLocality: 'La Bruyère',
+    address: { '@type': 'PostalAddress', addressLocality: S.location.locality,
                addressRegion: t.meta.region, addressCountry: 'BE' },
     numberOfRooms: 1, petsAllowed: false,
-    checkinTime: '17:00', checkoutTime: '11:00',
-    aggregateRating: { '@type': 'AggregateRating', ratingValue: '5.0',
-                       reviewCount: '6', bestRating: '5' },
+    // 24-hour values straight from settings — schema.org wants ISO-ish times,
+    // never the locale-formatted string shown on the page.
+    checkinTime: S.stay.checkinFrom, checkoutTime: S.stay.checkoutBy,
+    maximumAttendeeCapacity: S.stay.maxGuests,
+    aggregateRating: { '@type': 'AggregateRating',
+                       ratingValue: String(S.reputation.rating),
+                       reviewCount: String(S.reputation.reviewCount),
+                       bestRating: '5' },
   };
 
   return `<!DOCTYPE html>
@@ -380,7 +390,7 @@ ${JSON.stringify(schema, null, 2)}
       <h2 class="h2">${raw(t.visit.whereH2)}</h2>
       <p class="prose">${raw(t.visit.whereP)}</p>
       <a class="btn btn--ghost"
-         href="https://www.google.com/maps/dir/?api=1&amp;destination=La%20Bruy%C3%A8re%2C%20Namur%2C%20Belgium"
+         href="https://www.google.com/maps/dir/?api=1&amp;destination=${encodeURIComponent(S.location.mapsDestination)}"
          target="_blank" rel="noopener">${esc(t.visit.maps)}</a>
     </div>
   </div>

@@ -2,6 +2,7 @@
 /* Español. */
 module.exports = {
   code: 'es', name: 'Español', locale: 'es-ES', dir: 'es', dec: ',',
+  timeFmt: '{h}:{m}',
 
   meta: {
     title: 'Émines de Rien — alojamiento singular para dos · La Bruyère, Bélgica',
@@ -23,7 +24,7 @@ module.exports = {
     lede: 'Una casita con fachada de espejo para dos, entre los campos de Hesbaye, a las afueras de Namur. El revestimiento se queda con el cielo, y la noche es enteramente vuestra.',
     facts: ['2 huéspedes', '1 dormitorio', '1 cama queen size', '1 baño', 'Alojamiento entero'],
     ctaBook: 'Consulta tus fechas', ctaSee: 'Ver la casa',
-    rating: '{v} sobre 6 opiniones',
+    rating: '{v} sobre {reviewCount} opiniones',
     cue: 'Desplázate hasta la casa',
     videoAlt: 'La casa de espejo al anochecer, con su ventana iluminada reflejada en la piscina y las hierbas meciéndose en primer plano.',
   },
@@ -37,8 +38,8 @@ module.exports = {
       'La casa entera es vuestra, con total intimidad, además de una terraza cubierta asomada a los campos y un pequeño jardín privado sin nada enfrente.',
     ],
     stats: [
-      ['Valoración', '{rating}'], ['Opiniones', '6'],
-      ['Anfitriones desde', '3 años'], ['Respuesta', '&lt;1 h'],
+      ['Valoración', '{rating}'], ['Opiniones', '{reviewCount}'],
+      ['Anfitriones desde', '{hostingYears} años'], ['Respuesta', '&lt;1 h'],
     ],
   },
 
@@ -47,7 +48,7 @@ module.exports = {
     cards: [
       ['Bañera de hidromasaje', 'Una bañera de hidromasaje integrada en la planta abierta, con una amplia ducha a ras de suelo al lado.'],
       ['Cine privado', 'Un auténtico rincón de cine: pantalla grande y sonido envolvente, solo para vosotros dos.'],
-      ['Piscina climatizada, en temporada', 'Una piscina exterior climatizada de 8 × 4 m con cubierta y juegos acuáticos — la piscina de los propietarios, compartida y abierta a horas determinadas.'],
+      ['Piscina climatizada, en temporada', 'Una piscina exterior climatizada de {poolSize} m con cubierta y juegos acuáticos — la piscina de los propietarios, compartida y abierta a horas determinadas.'],
       ['Terraza cubierta', 'Una terraza cubierta privada sobre los campos, y un pequeño jardín sin nada enfrente.'],
       ['Cocina equipada', 'Una cocina totalmente equipada, para salir solo si os apetece.'],
       ['Arquitectura de espejo', 'Un revestimiento de espejo que os devuelve los campos, los setos y el cielo tal cual.'],
@@ -83,8 +84,8 @@ module.exports = {
 
   reviews: {
     eyebrow: 'Opiniones', h2: 'Seis estancias, seis opiniones de cinco estrellas',
-    scores: [['{5.0}', 'Limpieza'], ['{5.0}', 'Llegada'], ['{5.0}', 'Comunicación'],
-             ['{4.8}', 'Exactitud'], ['{4.8}', 'Calidad-precio'], ['{4.7}', 'Ubicación']],
+    scores: [['{cleanliness}', 'Limpieza'], ['{checkin}', 'Llegada'], ['{communication}', 'Comunicación'],
+             ['{accuracy}', 'Exactitud'], ['{value}', 'Calidad-precio'], ['{location}', 'Ubicación']],
     starsLabel: 'Valorado con 5 sobre 5',
     quotes: [
       ['«Fue absolutamente perfecto. Los anfitriones fueron increíblemente amables y acogedores, y nos hicieron sentir como en casa. El lugar en sí es precioso y tan tranquilo, escondido en un pueblecito encantador justo a las afueras de Namur. Uno de nuestros momentos favoritos fue despertarnos por la mañana y ver que los caballos venían a visitarnos: sinceramente, parecía un sueño.»', 'Raees'],
@@ -97,7 +98,7 @@ module.exports = {
   book: {
     eyebrow: 'Reserva directa', h2: 'Consulta tus fechas',
     intro: 'Dile a Céline &amp; Stéphane cuándo os gustaría venir y confirmarán la disponibilidad y el precio de vuestras noches. Responden a todas las consultas, normalmente en menos de una hora.',
-    ticks: ['La casa entera, solo para vosotros dos', 'Llegada entre las 17:00 y las 20:00', 'Aparcamiento gratuito en la propiedad'],
+    ticks: ['La casa entera, solo para vosotros dos', 'Llegada entre las {checkinFrom} y las {checkinUntil}', 'Aparcamiento gratuito en la propiedad'],
     lIn: 'Entrada', lOut: 'Salida', lGuests: 'Huéspedes',
     g1: '1 huésped', g2: '2 huéspedes', hint: 'La casa es para dos personas.',
     lName: 'Tu nombre', lEmail: 'Correo electrónico', lPhone: 'Teléfono', opt: '(opcional)',
@@ -123,8 +124,8 @@ module.exports = {
 
   visit: {
     eyebrow: 'Tu visita', h2: 'Llegada y horarios',
-    rows: [['Entrada', '17:00 – 20:00'], ['Salida', 'Antes de las 11:00'],
-           ['Huéspedes', '2 máximo'], ['Piscina', 'De temporada, a horas determinadas']],
+    rows: [['Entrada', '{checkinWindow}'], ['Salida', 'Antes de las {checkoutBy}'],
+           ['Huéspedes', '{maxGuests} máximo'], ['Piscina', 'De temporada, a horas determinadas']],
     note: 'Conviene saber: hay detector de humo. No hay detector de monóxido de carbono, y la piscina y la bañera de hidromasaje no están valladas ni cerradas con llave.',
     whereEyebrow: 'Dónde', whereH2: 'La Bruyère,<br>a las afueras de Namur',
     whereP: 'Campo abierto en la meseta de Hesbaye, a pocos minutos de Namur — los huéspedes lo describen como escondido en un pueblecito tranquilo. Aparcamiento gratuito en la propiedad. La dirección exacta se envía una vez confirmada la estancia.',

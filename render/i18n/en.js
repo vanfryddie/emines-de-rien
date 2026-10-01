@@ -4,6 +4,7 @@
    stay in French everywhere: they are on the logo. */
 module.exports = {
   code: 'en', name: 'English', locale: 'en-GB', dir: '', dec: '.',
+  timeFmt: '{h}:{m}',
 
   meta: {
     title: 'Émines de Rien — Mirror-clad tiny house for two · La Bruyère, Belgium',
@@ -25,7 +26,7 @@ module.exports = {
     lede: 'A mirror-clad tiny house for two in the Hesbaye fields outside Namur. The cladding takes in the sky, and the evening is entirely your own.',
     facts: ['2 guests', '1 bedroom', '1 queen bed', '1 bath', 'Entire tiny home'],
     ctaBook: 'Request your dates', ctaSee: 'See the house',
-    rating: '{v} from 6 guest reviews',
+    rating: '{v} from {reviewCount} guest reviews',
     cue: 'Scroll to the house',
     videoAlt: 'The mirror-clad house at dusk, its lit window reflected in the pool as grasses drift in the foreground.',
   },
@@ -39,8 +40,8 @@ module.exports = {
       'The whole gîte is yours in complete privacy, along with a covered terrace looking over the fields and a small private garden that nothing overlooks.',
     ],
     stats: [
-      ['Rating', '{rating}'], ['Reviews', '6'],
-      ['Hosting since', '3 yrs'], ['Reply time', '&lt;1 hr'],
+      ['Rating', '{rating}'], ['Reviews', '{reviewCount}'],
+      ['Hosting since', '{hostingYears} yrs'], ['Reply time', '&lt;1 hr'],
     ],
   },
 
@@ -49,7 +50,7 @@ module.exports = {
     cards: [
       ['Whirlpool bath', 'A whirlpool bath set into the open plan, with a large walk-in shower alongside.'],
       ['Private cinema', 'A real cinema corner: a big screen and immersive sound, for the two of you.'],
-      ['Heated pool, in season', 'An 8 × 4 m heated outdoor pool with a cover and pool toys — the owners’ pool, shared and open at set hours.'],
+      ['Heated pool, in season', 'An {poolSize} m heated outdoor pool with a cover and pool toys — the owners’ pool, shared and open at set hours.'],
       ['Covered terrace', 'A private covered terrace over the fields, and a small garden with nothing facing it.'],
       ['Equipped kitchen', 'A fitted kitchen, so you needn’t leave unless you feel like it.'],
       ['Mirror architecture', 'Mirrored cladding that hands the fields, the hedgerows and the weather straight back to you.'],
@@ -85,8 +86,8 @@ module.exports = {
 
   reviews: {
     eyebrow: 'Guests', h2: 'Six stays, six five-star reviews',
-    scores: [['{5.0}', 'Cleanliness'], ['{5.0}', 'Check-in'], ['{5.0}', 'Communication'],
-             ['{4.8}', 'Accuracy'], ['{4.8}', 'Value'], ['{4.7}', 'Location']],
+    scores: [['{cleanliness}', 'Cleanliness'], ['{checkin}', 'Check-in'], ['{communication}', 'Communication'],
+             ['{accuracy}', 'Accuracy'], ['{value}', 'Value'], ['{location}', 'Location']],
     starsLabel: 'Rated 5 out of 5',
     quotes: [
       ['“It was absolutely perfect. The hosts were incredibly kind, welcoming, and made us feel right at home. The place itself is beautiful and so peaceful, tucked away in a lovely little town just outside Namur. One of our favorite moments was waking up in the morning and having the horses come by to visit us — it honestly felt like a dream.”', 'Raees'],
@@ -99,7 +100,7 @@ module.exports = {
   book: {
     eyebrow: 'Book direct', h2: 'Request your dates',
     intro: 'Tell Céline &amp; Stéphane when you\'d like to come and they\'ll confirm availability and the price for your nights. They answer every enquiry, usually within the hour.',
-    ticks: ['The whole house, just for the two of you', 'Arrival between 17:00 and 20:00', 'Free parking on the property'],
+    ticks: ['The whole house, just for the two of you', 'Arrival between {checkinFrom} and {checkinUntil}', 'Free parking on the property'],
     lIn: 'Check-in', lOut: 'Check-out', lGuests: 'Guests',
     g1: '1 guest', g2: '2 guests', hint: 'The house sleeps two.',
     lName: 'Your name', lEmail: 'Email', lPhone: 'Phone', opt: '(optional)',
@@ -125,8 +126,8 @@ module.exports = {
 
   visit: {
     eyebrow: 'Visiting', h2: 'Arrival &amp; hours',
-    rows: [['Check-in', '17:00 – 20:00'], ['Check-out', 'Before 11:00'],
-           ['Guests', '2 maximum'], ['Pool', 'Seasonal, at set hours']],
+    rows: [['Check-in', '{checkinWindow}'], ['Check-out', 'Before {checkoutBy}'],
+           ['Guests', '{maxGuests} maximum'], ['Pool', 'Seasonal, at set hours']],
     note: 'Good to know: a smoke alarm is fitted. There is no carbon monoxide alarm, and the pool and whirlpool have no gate or lock.',
     whereEyebrow: 'Where', whereH2: 'La Bruyère,<br>outside Namur',
     whereP: 'Open countryside on the Hesbaye plateau, a short drive from Namur — guests describe it as tucked away in a quiet little town. Free parking on the property. The exact address is sent once your stay is confirmed.',

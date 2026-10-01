@@ -8,6 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 const { render, SITE } = require('./page');
+const settings = require('./settings');
 
 const ROOT = path.join(__dirname, '..', 'site');
 const manifest = JSON.parse(
@@ -15,7 +16,14 @@ const manifest = JSON.parse(
 
 // English first: it owns the root URL and is the x-default.
 const CODES = ['en', 'fr', 'de', 'nl', 'pl', 'es', 'it'];
-const all = CODES.map((c) => require(`./i18n/${c}.js`));
+// Business facts live in var/settings.json; the catalogues reference them as
+// {placeholders}. Resolve them once, here, so page.js only ever sees final text.
+const SETTINGS = settings.load();
+const all = CODES.map((c) => {
+  const t = require(`./i18n/${c}.js`);
+  return Object.assign(settings.resolve(t, settings.tokens(SETTINGS, t)),
+    { code: t.code, name: t.name, locale: t.locale, dir: t.dir, dec: t.dec });
+});
 
 /* ── sanity: every catalogue must carry the same keys and counts ──── */
 const ref = all[0];
