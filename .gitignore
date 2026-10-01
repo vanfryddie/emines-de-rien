@@ -24,3 +24,7 @@ render/plate*.jpg
 render/sheet/
 render/promo-sheet.jpg
 render/plate*.jpg
+config.php
+.env
+var/
+*.local.php
